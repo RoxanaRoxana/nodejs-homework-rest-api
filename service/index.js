@@ -27,11 +27,10 @@ const updateStatusContact = (contactId, contactToUpdate) =>
     },
     { $set: contactToUpdate },
     {
-      // do we want the state of the document from before or after operation
       new: true,
-      // we select if we want to run mongoose validators from schema
+
       runValidators: true,
-      // throw errors when payload has field from outside of schema
+
       strict: "throw",
     }
   );
