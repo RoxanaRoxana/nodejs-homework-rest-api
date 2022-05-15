@@ -27,6 +27,10 @@ user.methods.setPassword = async function (password) {
     this.password = await bcrypt.hash(password, bcrypt.genSaltSync(10))
 }
 
+user.methods.validatePassword = async function (password) {
+  return bcrypt.compare(password, this.password);
+};
+
 
 const User = mongoose.model("user", user);
 

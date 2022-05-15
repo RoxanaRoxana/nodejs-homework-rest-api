@@ -1,7 +1,9 @@
 const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose");
+const authMiddleware = require("./middleware/jwt");
 require("dotenv").config();
+require("./config/passport")
 
 const uriDb = process.env.DB_URI;
 const port = process.env.PORT;
@@ -14,6 +16,7 @@ app.use(express.json());
 
 app.use("/api/auth", require("./routes/auth"));
 app.use("/api/contacts", require("./routes/contacts"));
+app.use("/api", authMiddleware, require("./routes/current"));
 
 app.use((req, res) => {
   res.status(404).json({ message: "Not found" });
