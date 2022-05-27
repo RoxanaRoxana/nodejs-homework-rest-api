@@ -38,7 +38,7 @@ const post = async (req, res, next) => {
 const deleteContact = async (req, res, next) => {
   const { contactId } = req.params;
   await service.deleteContact(contactId);
-  res.status(204);
+  res.status(204).json();
 };
 
 const put = async (req, res, next) => {
@@ -77,23 +77,7 @@ const patchIsFavorite = async (req, res, next) => {
   }
 };
 
-// const patchIsDone = async (req, res, next) => {
-//   const { taskId } = req.params;
-//   const { isDone = false } = req.body;
-//   try {
-//     const result = await service.updateTask(taskId, { isDone });
-//     if (!result) {
-//       res.status(404).json({ message: "Task not found" });
-//     } else {
-//       res.json({
-//         message: `task was patched to isDone = ${isDone}`,
-//         task: result,
-//       });
-//     }
-//   } catch (e) {
-//     next(e);
-//   }
-// };
+
 
 module.exports = {
   get,
