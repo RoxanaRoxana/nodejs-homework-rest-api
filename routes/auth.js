@@ -2,6 +2,10 @@ const express = require("express");
 const User = require("../service/schemas/users");
 const router = express.Router();
 const jwt = require("jsonwebtoken");
+const gravatar = require("gravatar");
+
+
+
 
 router.post("/users/signup", async (req, res, next) => {
   const { email, password } = req.body;
@@ -11,12 +15,13 @@ router.post("/users/signup", async (req, res, next) => {
   }
 
   try {
-    const newUser = new User({ email, password });
+    const avatarURL = gravatar.url(email);
+    const newUser = new User({ email, password, avatarURL });
     await newUser.setPassword(password);
     await newUser.save();
     res
       .status(201)
-      .json({ message: "User created",  email});
+      .json({ message: "User created", user: email, id: user._id});
   } catch (e) {
     next(e);
   }
@@ -39,6 +44,7 @@ router.post("/users/login", async (req, res, next) => {
   const token = jwt.sign(payload, process.env.SECRET, { expiresIn: "12h" });
   res.json({token})
 });
+
 
 
 
