@@ -8,7 +8,6 @@ const fs = require("fs").promises;
 const Jimp = require("jimp");
 
 const uploadDir = path.join(process.cwd(), "tmp");
-const storeDir = path.resolve("./public/avatars");
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, uploadDir);
