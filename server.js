@@ -17,6 +17,7 @@ app.use(express.json());
 app.use("/api/auth", require("./routes/auth"));
 app.use("/api/contacts", require("./routes/contacts"));
 app.use("/api", authMiddleware, require("./routes/current"));
+app.use('/api', require('./routes/verification'))
 
 app.use((req, res) => {
   res.status(404).json({ message: "Not found" });
