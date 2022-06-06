@@ -17,24 +17,30 @@ router.get("/users/verify/:verificationToken", (req, res) => {
 router.post("/users/verify", (req, res) => {
     const { email } = req.body;
     
-     try {
+  try {
     const user = await User.findOne({ email }).lean();
     if (!user) {
       res.status(404).json({
         message: `User not found`,
       });
     } else if (!user.verify) {
-      sendMail(email, user.verificationToken);
-      res.status(200).json({
-        message: "Verification email sent",
-      });
-    } else {
-      res.status(400).json({
-        message: "Verification has already been passed",
-      });
+      try {
+        await sendMail(email, user.verificationToken);
+        res.status(200).json({
+          message: "Verification email sent",
+        });
+      } catch (e) {
+        res.json({message: "Error sending  email"})
+      }
     }
-  } catch (e) {
-    console.error(e);
-    next(e);
-  }
+    else {
+        res.status(400).json({
+          message: "Verification has already been passed",
+        });
+      }
+    } catch (e) {
+      console.error(e);
+      next(e);
+    }
+  
 })
