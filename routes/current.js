@@ -8,12 +8,13 @@ router.get("/current", (req, res) => {
 });
 
 router.get("/users/logout", (req, res) => {
-  const user = User.findById({_id: req.user});
+  const user = User.findById({ _id: req.user });
   if (!user) {
     res.status(401).json({ message: "Not authorized" });
   } else {
-res.status(200).json("Logged out")
+    res.status(200).json("Logged out");
   }
 });
+
 
 module.exports = router;

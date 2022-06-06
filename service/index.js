@@ -35,6 +35,7 @@ const updateStatusContact = (contactId, contactToUpdate) =>
     }
   );
 
+ 
 module.exports = {
   getAllContacts,
   getContact,
